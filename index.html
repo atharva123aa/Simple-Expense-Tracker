@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIMPLE_EXPENSE_TRACKER</title>
+    <style>
+        /* RAW STYLE - NO FANCY STUFF */
+        body {
+            font-family: sans-serif;
+            background: #f4f4f4;
+            padding: 15px;
+            color: #333;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border: 2px solid #000;
+            /* sharp borders look more "human" */
+            max-width: 400px;
+            margin: auto;
+        }
+
+        h2 {
+            margin-top: 0;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+        }
+
+        .balance-box {
+            background: #eee;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #222;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            /* keeps it from overflowing mobile screen */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #222;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ccc;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .price {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Tracker_v1</h2>
+
+        <div class="balance-box">
+            Total Spent: ₹<span id="total">0</span>
+        </div>
+
+        <input type="text" id="name" placeholder="Item name (e.g. Snacks)">
+        <input type="number" id="amt" placeholder="Amount (e.g. 50)">
+        <button onclick="addEntry()">LOG EXPENSE</button>
+
+        <ul id="list">
+        </ul>
+    </div>
+
+    <script>
+        // THE RAW LOGIC
+        let totalValue = 0;
+        const list = document.getElementById('list');
+        const totalDisplay = document.getElementById('total');
+
+        function addEntry() {
+            const nameInput = document.getElementById('name');
+            const amtInput = document.getElementById('amt');
+
+            // basic check
+            if (nameInput.value == "" || amtInput.value == "") {
+                alert("Fill both fields!");
+                return;
+            }
+
+            // 1. Update the Math
+            let val = parseFloat(amtInput.value);
+            totalValue += val;
+            totalDisplay.innerText = totalValue;
+
+            // 2. Add to UI
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <span>${nameInput.value}</span>
+            <span class="price">₹${val}</span>
+        `;
+            list.appendChild(li);
+
+            // 3. Reset inputs for next one
+            nameInput.value = "";
+            amtInput.value = "";
+        }
+    </script>
+
+</body>
+
+</html>
